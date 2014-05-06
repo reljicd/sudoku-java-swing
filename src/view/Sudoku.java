@@ -5,26 +5,24 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import model.Game;
+import controller.SudokuController;
 
 public class Sudoku {
-	
-	private static JTextArea output;
-    private static JScrollPane scrollPane;
 	
     private static Container createContentPane() {
         //Create the content-pane-to-be.
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.setOpaque(true);
- 
-        //Create a scrolled text area.
-        output = new JTextArea(5, 30);
-        output.setEditable(false);
-        scrollPane = new JScrollPane(output);
- 
-        //Add the text area to the content pane.
-        contentPane.add(scrollPane, BorderLayout.CENTER);
+        
+        Game game = new Game();
+        
+        SudokuPanel sudokuPanel = new SudokuPanel();
+        SudokuController sudokuController = new SudokuController(sudokuPanel, game);
+        sudokuPanel.setGame(game);
+        sudokuPanel.setController(sudokuController);
+        contentPane.add(sudokuPanel, BorderLayout.CENTER);
  
         return contentPane;
     }
