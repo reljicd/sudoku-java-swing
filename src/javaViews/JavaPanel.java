@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 
 import controller.NumbersController;
 import controller.SudokuController;
-import view.Label;
-import view.Panel;
+import viewFactory.Label;
+import viewFactory.Panel;
 
 /**
  * @author reljicd

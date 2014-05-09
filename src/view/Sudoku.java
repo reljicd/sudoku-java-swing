@@ -1,5 +1,7 @@
 package view;
 
+import viewFactory.Frame;
+import viewFactory.ViewsFactory;
 import javaViews.JavaViewsFactory;
 import model.Game;
 import controller.MenuController;

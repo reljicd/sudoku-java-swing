@@ -1,4 +1,4 @@
-package view;
+package viewFactory;
 
 import java.awt.Component;
 import java.awt.Point;

@@ -1,5 +1,8 @@
 package view;
 
+import viewFactory.Menu;
+import viewFactory.MenuBar;
+import viewFactory.MenuItem;
 import controller.MenuController;
 
 public class SudokuMenu {

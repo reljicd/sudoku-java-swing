@@ -1,5 +1,7 @@
 package view;
 
+import viewFactory.Panel;
+
 public class Numbers {
 
 	private static Numbers instance = null;

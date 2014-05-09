@@ -1,7 +1,8 @@
 /**
  * 
  */
-package view;
+package viewFactory;
+
 
 /**
  * @author reljicd

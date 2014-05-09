@@ -1,4 +1,6 @@
-package view;
+package viewFactory;
+
+import view.Colors;
 
 public interface Label {
 	

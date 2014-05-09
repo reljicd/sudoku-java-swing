@@ -1,4 +1,5 @@
-package view;
+package viewFactory;
+
 
 public interface MenuBar {
 

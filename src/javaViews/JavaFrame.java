@@ -9,9 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 
-import view.Frame;
-import view.MenuBar;
-import view.Panel;
+import viewFactory.Frame;
+import viewFactory.MenuBar;
+import viewFactory.Panel;
 
 /**
  * @author reljicd
@@ -30,6 +30,7 @@ public class JavaFrame extends JFrame implements Frame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		setSize(dimensionX, dimensionY);
+		setLocationRelativeTo(null);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package view;
 
+import viewFactory.Panel;
 import model.Game;
 import controller.SudokuController;
 

@@ -5,8 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import model.Game;
-import view.Label;
 import view.Numbers;
+import viewFactory.Label;
 
 public class NumbersController implements MouseListener {
 

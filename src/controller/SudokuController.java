@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 import model.Game;
 import model.UpdateAction;
 import view.Field;
-import view.Label;
 import view.Numbers;
 import view.SudokuPanel;
+import viewFactory.Label;
 
 /**
  * This class controls all user actions from SudokuPanel.

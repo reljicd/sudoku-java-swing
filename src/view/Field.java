@@ -1,5 +1,7 @@
 package view;
 
+import viewFactory.Label;
+
 /**
  * This class represents a field on the SudokuPanel.
  * 

@@ -11,7 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import view.Colors;
-import view.Label;
+import viewFactory.Label;
 
 /**
  * @author reljicd

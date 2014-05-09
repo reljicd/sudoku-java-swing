@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package viewFactory;
 
 import controller.MenuController;
 

@@ -1,12 +1,12 @@
 package javaViews;
 
-import view.Frame;
-import view.Label;
-import view.Menu;
-import view.MenuBar;
-import view.MenuItem;
-import view.Panel;
-import view.ViewsFactory;
+import viewFactory.Frame;
+import viewFactory.Label;
+import viewFactory.Menu;
+import viewFactory.MenuBar;
+import viewFactory.MenuItem;
+import viewFactory.Panel;
+import viewFactory.ViewsFactory;
 
 public class JavaViewsFactory implements ViewsFactory{
 

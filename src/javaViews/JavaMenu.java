@@ -5,8 +5,8 @@ package javaViews;
 
 import javax.swing.JMenu;
 
-import view.Menu;
-import view.MenuItem;
+import viewFactory.Menu;
+import viewFactory.MenuItem;
 
 /**
  * @author reljicd
