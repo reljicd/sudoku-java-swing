@@ -20,7 +20,7 @@ import viewFactory.Label;
  * 
  * @author Eric Beijer
  */
-public class SudokuController implements MouseListener, Observer {
+public class SudokuPanelController implements MouseListener, Observer {
 	private Game game; // Current Sudoku game.
 	private SudokuPanel sudokuPanel;
 
@@ -30,7 +30,7 @@ public class SudokuController implements MouseListener, Observer {
 	 * @param game
 	 *            Game to be set.
 	 */
-	public SudokuController(SudokuPanel sudokuPanel, Game game) {
+	public SudokuPanelController(SudokuPanel sudokuPanel, Game game) {
 
 		this.sudokuPanel = sudokuPanel;
 		this.game = game;
@@ -53,7 +53,7 @@ public class SudokuController implements MouseListener, Observer {
 	public void mouseClicked(MouseEvent e) {
 		JPanel panel = (JPanel) e.getSource();
 		Component component = panel.getComponentAt(e.getPoint());
-		Numbers.getInstance().setVisible(true);
+
 		Numbers.getInstance()
 				.getPanel()
 				.setSize(component.getParent().getWidth(),
@@ -73,6 +73,9 @@ public class SudokuController implements MouseListener, Observer {
 
 				game.setSelectedFieldX(x);
 				game.setSelectedFieldY(y);
+			}
+			if (field.isModifiable()) {
+				Numbers.getInstance().setVisible(true);
 			}
 		}
 	}
@@ -97,15 +100,17 @@ public class SudokuController implements MouseListener, Observer {
 	public void update(Observable o, Object arg) {
 		switch ((UpdateAction) arg) {
 		case NEW_GAME:
-			sudokuPanel.setGame((Game) o);
+			sudokuPanel.initializeWithGame((Game) o);
 			break;
 		case CHECK:
 			break;
 		case SELECTED_NUMBER:
 			sudokuPanel.setNumber((Game) o);
 			break;
-		case CANDIDATES:
-		case HELP:
+		case UNDO_GAME:
+			sudokuPanel.initializeWithGame((Game) o);
+			break;
+		case HINT:
 			break;
 		}
 	}

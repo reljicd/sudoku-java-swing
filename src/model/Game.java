@@ -10,7 +10,7 @@ import java.util.Observable;
  * input, the selected number and methods to check the validation of the user
  * input.
  * 
- * @author Eric Beijer
+ * @author Dusan Reljic
  */
 public class Game extends Observable {
 	private int[][] solution; // Generated solution.
@@ -19,7 +19,6 @@ public class Game extends Observable {
 	private int selectedFieldX; // Selected number by user.
 	private int selectedFieldY; // Selected number by user.
 	private int selectedNumber; // Selected number by user.
-	private boolean help; // Help turned on or off.
 
 	/**
 	 * Constructor
@@ -27,7 +26,6 @@ public class Game extends Observable {
 	public Game() {
 		newGame();
 		check = new boolean[9][9];
-		help = true;
 	}
 
 	/**
@@ -39,10 +37,18 @@ public class Game extends Observable {
 		game = generateGame(copy(solution));
 		setChanged();
 		notifyObservers(UpdateAction.NEW_GAME);
+		
+		/* 
+		 * Debug
+		 */
+		System.out.println("SOLUTION:");
+		print(solution);
+		System.out.println("GAME:");
+		print(game);
 	}
 
 	/**
-	 * Checks user input agains the solution and puts it into a check matrix.<br />
+	 * Checks user input against the solution and puts it into a check matrix.<br />
 	 * All observers will be notified, update action: check.
 	 */
 	public void checkGame() {
@@ -53,19 +59,6 @@ public class Game extends Observable {
 		}
 		setChanged();
 		notifyObservers(UpdateAction.CHECK);
-	}
-
-	/**
-	 * Sets help turned on or off.<br />
-	 * All observers will be notified, update action: help.
-	 * 
-	 * @param help
-	 *            True for help on, false for help off.
-	 */
-	public void setHelp(boolean help) {
-		this.help = help;
-		setChanged();
-		notifyObservers(UpdateAction.HELP);
 	}
 
 	/**
@@ -82,7 +75,7 @@ public class Game extends Observable {
 	public int getSelectedFieldX() {
 		return this.selectedFieldX;
 	}
-	
+
 	public void setSelectedFieldY(int selectedFieldY) {
 		this.selectedFieldY = selectedFieldY;
 	}
@@ -90,19 +83,9 @@ public class Game extends Observable {
 	public int getSelectedFieldY() {
 		return this.selectedFieldY;
 	}
-	
+
 	public int getSelectedNumber() {
 		return this.selectedNumber;
-	}
-	
-
-	/**
-	 * Returns whether help is turned on or off.
-	 * 
-	 * @return True if help is turned on, false if help is turned off.
-	 */
-	public boolean isHelp() {
-		return help;
 	}
 
 	/**
@@ -405,9 +388,14 @@ public class Game extends Observable {
 	 * Prints given game to console. Used for debug.
 	 * 
 	 * @param game Game to be printed.
-	 * 
-	 * private void print(int[][] game) { System.out.println(); for (int y = 0;
-	 * y < 9; y++) { for (int x = 0; x < 9; x++) System.out.print(" " +
-	 * game[y][x]); System.out.println(); } }
 	 */
+	private void print(int[][] game) {
+		System.out.println();
+		for (int y = 0; y < 9; y++) {
+			for (int x = 0; x < 9; x++)
+				System.out.print(" " + game[y][x]);
+			System.out.println();
+		}
+	}
+
 }
