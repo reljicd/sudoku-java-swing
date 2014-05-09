@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import model.Game;
-import view.Field;
+import view.Label;
 import view.Numbers;
 
 public class NumbersController implements MouseListener {
@@ -29,16 +29,12 @@ public class NumbersController implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		Component component = Numbers.getInstance().getComponentAt(e.getPoint());
+		Component component = Numbers.getInstance().getPanel().getComponentAt(e.getPoint());
 
-		if (component instanceof Field) {
-			Field field = (Field) component;
-			int x = field.getFieldX();
-			int y = field.getFieldY();
-
-			game.setNumber((x + 1) * (y + 1));
+		if (component instanceof Label) {
+			game.setNumber(Integer.parseInt(((Label) component).getText()));
 		}
-		
+
 		Numbers.getInstance().setVisible(false);
 	}
 

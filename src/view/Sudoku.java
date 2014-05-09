@@ -1,36 +1,27 @@
 package view;
 
-import java.awt.BorderLayout;
-
 import javaViews.JavaViewsFactory;
-
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-
 import model.Game;
 import controller.MenuController;
 import controller.NumbersController;
 import controller.SudokuController;
 
-public class Sudoku extends JFrame {
-	
-	private static final int dimensionX = 450;
-	private static final int dimensionY = 470;
+public class Sudoku {
+
+	private Frame frame;
 
 	private Game game;
 	private SudokuPanel sudokuPanel;
 	private SudokuController sudokuController;
 	private MenuController menuController;
 	private NumbersController numbersController;
-	private Menu menu;
+	private SudokuMenu sudokuMenu;
 	// Here you can choose concrete implementation (Android or Java)
 	private static ViewsFactory viewsFactory = JavaViewsFactory.getInstance();
 
 	public Sudoku() {
 		// Create and set up the window.
-		super("Sudoku");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout());
+		frame = viewsFactory.createFrame();
 
 		game = new Game();
 		sudokuPanel = new SudokuPanel();
@@ -40,25 +31,23 @@ public class Sudoku extends JFrame {
 
 		sudokuPanel.setGame(game);
 		sudokuPanel.setController(sudokuController);
-		add(sudokuPanel, BorderLayout.CENTER);
+		frame.add(sudokuPanel.getPanel());
 
-		getLayeredPane().add(Numbers.getInstance(), JLayeredPane.DEFAULT_LAYER);
-		Numbers.getInstance().setVisible(false);
-		Numbers.getInstance().addMouseListener(numbersController);
+		frame.addToLayeredPane(Numbers.getInstance().getPanel());
+		Numbers.getInstance().getPanel().setVisible(false);
+		Numbers.getInstance().getPanel().addMouseListener(numbersController);
 
-		menu = new Menu();
-		setJMenuBar(menu);
-		menu.setController(menuController);
+		sudokuMenu = new SudokuMenu();
+		frame.setMenuBar(sudokuMenu.getMenuBar());
+		sudokuMenu.setController(menuController);
 
 		game.addObserver(sudokuController);
 
-		setSize(dimensionX, dimensionY);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setVisible(true);
+		frame.setResizable(false);
+		frame.setVisible(true);
 	}
-	
-	public static ViewsFactory getViewsFactory(){
+
+	public static ViewsFactory getViewsFactory() {
 		return viewsFactory;
 	}
 

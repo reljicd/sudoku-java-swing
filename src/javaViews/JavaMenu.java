@@ -4,34 +4,31 @@
 package javaViews;
 
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 
 import view.Menu;
-import view.MenuBar;
 import view.MenuItem;
 
 /**
  * @author reljicd
- * 
+ *
  */
-public class JavaMenuBar extends JMenuBar implements MenuBar {
-
+public class JavaMenu extends JMenu implements Menu {
+	
 	/**
 	 * 
 	 */
-	public JavaMenuBar() {
-		// Create the menu bar.
+	public JavaMenu() {
 		super();
 	}
-
+	
 	@Override
-	public void addMenu(Menu menu) {
-		super.add((JMenu) menu);
+	public void setText(String text){
+		super.setText(text);
 	}
-
+	
 	@Override
 	public void addMenuItem(MenuItem menuItem) {
 		super.add((JavaMenuItem) menuItem);
 	}
-	
+
 }

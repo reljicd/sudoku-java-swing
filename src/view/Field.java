@@ -1,20 +1,14 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-
 /**
  * This class represents a field on the SudokuPanel.
  * 
- * @author Eric Beijer
+ * @author Dusan Reljic
  */
-public class Field extends JLabel{
+public class Field{
 	private int x; // X position in game.
 	private int y; // Y position in game.
+	private Label label;
 
 	/**
 	 * Constructs the label and sets x and y positions in game.
@@ -25,14 +19,12 @@ public class Field extends JLabel{
 	 *            Y position in game.
 	 */
 	public Field(int x, int y) {
-		super("", CENTER);
+		
+		label = Sudoku.getViewsFactory().createLabel();
+		label.setSudokuParentContainer(this);
+		
 		this.x = x;
 		this.y = y;
-
-		setPreferredSize(new Dimension(40, 40));
-		setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
-		setOpaque(true);
 	}
 
 	/**
@@ -44,8 +36,12 @@ public class Field extends JLabel{
 	 *            Boolean indicating number is user input or not.
 	 */
 	public void setNumber(int number, boolean userInput) {
-		setForeground(userInput ? Color.BLUE : Color.BLACK);
-		setText(number > 0 ? number + "" : "");
+		label.setForeground(userInput ? Colors.BLUE : Colors.BLACK);
+		label.setText(number > 0 ? number + "" : "");
+	}
+	
+	public void setBackground (Colors color){
+		label.setBackground(color);
 	}
 
 	/**
@@ -64,5 +60,9 @@ public class Field extends JLabel{
 	 */
 	public int getFieldY() {
 		return y;
+	}
+	
+	public Label getLabel(){
+		return label;
 	}
 }

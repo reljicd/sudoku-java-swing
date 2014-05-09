@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import model.Game;
 import model.UpdateAction;
 import view.Field;
+import view.Label;
 import view.Numbers;
 import view.SudokuPanel;
 
@@ -53,16 +54,26 @@ public class SudokuController implements MouseListener, Observer {
 		JPanel panel = (JPanel) e.getSource();
 		Component component = panel.getComponentAt(e.getPoint());
 		Numbers.getInstance().setVisible(true);
-		Numbers.getInstance().setLocation(
-				component.getParent().getX() + e.getX() - 100,
-				component.getParent().getY() + e.getY() - 100);
-		if (component instanceof Field) {
-			Field field = (Field) component;
-			int x = field.getFieldX();
-			int y = field.getFieldY();
+		Numbers.getInstance()
+				.getPanel()
+				.setSize(component.getParent().getWidth(),
+						component.getParent().getHeight());
+		Numbers.getInstance()
+				.getPanel()
+				.setLocation(component.getParent().getX(),
+						component.getParent().getY() + 20);
 
-			game.setSelectedFieldX(x);
-			game.setSelectedFieldY(y);
+		if (component instanceof Label
+				&& ((Label) component).getSudokuParentContainer() instanceof Field) {
+			Field field = (Field) ((Label) component)
+					.getSudokuParentContainer();
+			if (field != null) {
+				int x = field.getFieldX();
+				int y = field.getFieldY();
+
+				game.setSelectedFieldX(x);
+				game.setSelectedFieldY(y);
+			}
 		}
 	}
 
