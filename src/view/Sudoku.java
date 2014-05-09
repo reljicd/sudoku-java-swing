@@ -2,6 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 
+import javaViews.JavaViewsFactory;
+
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
@@ -11,6 +13,9 @@ import controller.NumbersController;
 import controller.SudokuController;
 
 public class Sudoku extends JFrame {
+	
+	private static final int dimensionX = 450;
+	private static final int dimensionY = 470;
 
 	private Game game;
 	private SudokuPanel sudokuPanel;
@@ -18,6 +23,8 @@ public class Sudoku extends JFrame {
 	private MenuController menuController;
 	private NumbersController numbersController;
 	private Menu menu;
+	// Here you can choose concrete implementation (Android or Java)
+	private static ViewsFactory viewsFactory = JavaViewsFactory.getInstance();
 
 	public Sudoku() {
 		// Create and set up the window.
@@ -45,9 +52,14 @@ public class Sudoku extends JFrame {
 
 		game.addObserver(sudokuController);
 
-		setSize(450, 450);
+		setSize(dimensionX, dimensionY);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+	
+	public static ViewsFactory getViewsFactory(){
+		return viewsFactory;
 	}
 
 	public static void main(String[] args) {
