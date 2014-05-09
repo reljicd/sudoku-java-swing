@@ -18,7 +18,7 @@ public class Numbers {
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {
 				fields[y][x] = new Field(x, y);
-				fields[y][x].setNumber(counter++, true);
+				fields[y][x].initialize(counter++);
 				panel.add(fields[y][x].getLabel());
 			}
 		}

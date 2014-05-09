@@ -12,7 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import controller.NumbersController;
-import controller.SudokuController;
+import controller.SudokuPanelController;
 import viewFactory.Label;
 import viewFactory.Panel;
 
@@ -56,7 +56,7 @@ public class JavaPanel extends JPanel implements Panel {
 	}
 
 	@Override
-	public void addMouseListener(SudokuController sudokuController) {
+	public void addMouseListener(SudokuPanelController sudokuController) {
 		super.addMouseListener(sudokuController);		
 	}
 

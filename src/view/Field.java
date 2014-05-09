@@ -7,10 +7,19 @@ import viewFactory.Label;
  * 
  * @author Dusan Reljic
  */
-public class Field{
+public class Field {
 	private int x; // X position in game.
 	private int y; // Y position in game.
 	private Label label;
+
+	/*
+	 * Possible states of the Field
+	 */
+	private FieldState state;
+	private FieldStateEmpty emptyState = new FieldStateEmpty();
+	private FieldStateComputerGenerated computerGeneratedState = new FieldStateComputerGenerated();
+	private FieldStateCandidate candidateState = new FieldStateCandidate();
+	private FieldStateSolved solvedState = new FieldStateSolved();
 
 	/**
 	 * Constructs the label and sets x and y positions in game.
@@ -21,12 +30,25 @@ public class Field{
 	 *            Y position in game.
 	 */
 	public Field(int x, int y) {
-		
+
 		label = Sudoku.getViewsFactory().createLabel();
 		label.setSudokuParentContainer(this);
-		
+
+		setState(emptyState);
+
 		this.x = x;
 		this.y = y;
+	}
+
+	private void setState(FieldState state) {
+		this.state = state;
+	}
+
+	public void initialize(int number) {
+		setState(number > 0 ? computerGeneratedState : emptyState);
+		label.setText(number > 0 ? number + "" : "");
+		label.setForeground(state.getTextColor());
+		label.setBackground(state.getBackgroundColor());
 	}
 
 	/**
@@ -34,18 +56,24 @@ public class Field{
 	 * 
 	 * @param number
 	 *            Number to be set.
-	 * @param userInput
-	 *            Boolean indicating number is user input or not.
 	 */
-	public void setNumber(int number, boolean userInput) {
-		label.setForeground(userInput ? Colors.BLUE : Colors.BLACK);
-		label.setText(number > 0 ? number + "" : "");
-	}
-	
-	public void setBackground (Colors color){
-		label.setBackground(color);
+	public void setNumber(int number) {
+		if (state.isModifiable()) {
+			setState(number > 0 ? candidateState : emptyState);
+			label.setText(number > 0 ? number + "" : "");
+			label.setForeground(state.getTextColor());
+			label.setBackground(state.getBackgroundColor());
+		}
 	}
 
+	public void setSolved(){
+		setState(solvedState);
+	}
+	
+	public boolean isModifiable(){
+		return state.isModifiable();
+	}
+	
 	/**
 	 * Returns x position in game.
 	 * 
@@ -63,8 +91,8 @@ public class Field{
 	public int getFieldY() {
 		return y;
 	}
-	
-	public Label getLabel(){
+
+	public Label getLabel() {
 		return label;
 	}
 }

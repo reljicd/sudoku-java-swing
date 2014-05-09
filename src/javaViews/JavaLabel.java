@@ -50,16 +50,28 @@ public class JavaLabel extends JLabel implements Label {
 			super.setForeground(Color.BLACK);
 			break;
 		case WHITE:
+			super.setForeground(Color.WHITE);
+			break;
+		case GRAY:
+			super.setForeground(Color.GRAY);
+			break;
 		}
 	}
 
 	public void setBackground(Colors color) {
 		switch (color) {
+		case BLUE:
+			super.setBackground(Color.BLUE);
+			break;
+		case BLACK:
+			super.setBackground(Color.BLACK);
+			break;
 		case WHITE:
 			super.setBackground(Color.WHITE);
 			break;
-		case BLUE:
-		case BLACK:
+		case GRAY:
+			super.setBackground(Color.GRAY);
+			break;			
 		}
 	}
 

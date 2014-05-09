@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Point;
 
 import controller.NumbersController;
-import controller.SudokuController;
+import controller.SudokuPanelController;
 
 public interface Panel {
 
@@ -18,7 +18,7 @@ public interface Panel {
 
 	public void setVisible(Boolean aFlag);
 
-	public void addMouseListener(SudokuController sudokuController);
+	public void addMouseListener(SudokuPanelController sudokuController);
 
 	public Component getComponentAt(Point point);
 

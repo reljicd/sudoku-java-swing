@@ -10,5 +10,6 @@ package view;
 public enum Colors {
 	WHITE,
 	BLUE,
-	BLACK
+	BLACK, 
+	GRAY
 }

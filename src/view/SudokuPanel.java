@@ -2,7 +2,7 @@ package view;
 
 import viewFactory.Panel;
 import model.Game;
-import controller.SudokuController;
+import controller.SudokuPanelController;
 
 /**
  * This class draws the sudoku panel and reacts to updates from the model.
@@ -44,18 +44,17 @@ public class SudokuPanel {
 	 * @param game
 	 *            Game to be set.
 	 */
-	public void setGame(Game game) {
+	public void initializeWithGame(Game game) {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++) {
-				fields[y][x].setBackground(Colors.WHITE);
-				fields[y][x].setNumber(game.getNumber(x, y), false);
+				fields[y][x].initialize(game.getNumber(x, y));
 			}
 		}
 	}
 
 	public void setNumber(Game game) {
 		fields[game.getSelectedFieldY()][game.getSelectedFieldX()].setNumber(
-				game.getSelectedNumber(), true);
+				game.getSelectedNumber());
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class SudokuPanel {
 	 *            Controller which controls all user actions.
 	 */
 
-	public void setController(SudokuController sudokuController) {
+	public void setController(SudokuPanelController sudokuController) {
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++)
 				panels[y][x].addMouseListener(sudokuController);
