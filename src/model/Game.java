@@ -60,7 +60,17 @@ public class Game extends Observable {
 		setChanged();
 		notifyObservers(UpdateAction.CHECK);
 	}
+	
+	public void undoGame() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	public void saveGame() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/**
 	 * Sets selected number to user input.<br />
 	 * All observers will be notified, update action: selected number.

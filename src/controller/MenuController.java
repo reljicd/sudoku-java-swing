@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.Game;
+import viewFactory.MenuItem;
 
 public class MenuController implements ActionListener {
 	private Game game;
@@ -25,13 +26,6 @@ public class MenuController implements ActionListener {
 	 *            ActionEvent.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("New Game"))
-			game.newGame();
-		else if (e.getActionCommand().equals("Save Game"))
-			;
-		else if (e.getActionCommand().equals("Undo"))
-			;
-		else if (e.getActionCommand().equals("Exit"))
-			System.exit(0);
+		if (e.getSource() instanceof MenuItem) ((MenuItem)e.getSource()).execute();
 	}
 }

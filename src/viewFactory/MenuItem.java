@@ -3,6 +3,8 @@
  */
 package viewFactory;
 
+import commands.Command;
+
 import controller.MenuController;
 
 /**
@@ -11,8 +13,10 @@ import controller.MenuController;
  */
 public interface MenuItem {
 	
-	public void setText(String text);
-
 	public void addActionListener(MenuController menuController);
+	
+	public void setCommand(Command command);
+	
+	public void execute();
 
 }
