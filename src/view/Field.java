@@ -47,8 +47,7 @@ public class Field {
 	public void initialize(int number) {
 		setState(number > 0 ? computerGeneratedState : emptyState);
 		label.setText(number > 0 ? number + "" : "");
-		label.setForeground(state.getTextColor());
-		label.setBackground(state.getBackgroundColor());
+		updateLabel();
 	}
 
 	/**
@@ -61,13 +60,13 @@ public class Field {
 		if (state.isModifiable()) {
 			setState(number > 0 ? candidateState : emptyState);
 			label.setText(number > 0 ? number + "" : "");
-			label.setForeground(state.getTextColor());
-			label.setBackground(state.getBackgroundColor());
+			updateLabel();
 		}
 	}
 
 	public void setSolved(){
 		setState(solvedState);
+		updateLabel();
 	}
 	
 	public boolean isModifiable(){
@@ -94,5 +93,10 @@ public class Field {
 
 	public Label getLabel() {
 		return label;
+	}
+	
+	private void updateLabel(){
+		label.setForeground(state.getTextColor());
+		label.setBackground(state.getBackgroundColor());
 	}
 }

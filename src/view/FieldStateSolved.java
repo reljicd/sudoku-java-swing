@@ -30,7 +30,7 @@ public class FieldStateSolved implements FieldState {
 	 */
 	@Override
 	public Colors getBackgroundColor() {
-		return Colors.GRAY;
+		return Colors.WHITE;
 	}
 
 }

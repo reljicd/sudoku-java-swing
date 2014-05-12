@@ -16,9 +16,10 @@ public class Game extends Observable {
 	private int[][] solution; // Generated solution.
 	private int[][] game; // Generated game with user input.
 	private boolean[][] check; // Holder for checking validity of game.
-	private int selectedFieldX; // Selected number by user.
-	private int selectedFieldY; // Selected number by user.
+	private int selectedColumn; // Selected number by user.
+	private int selectedRow; // Selected number by user.
 	private int selectedNumber; // Selected number by user.
+	private Iterator iterator;
 
 	/**
 	 * Constructor
@@ -37,8 +38,8 @@ public class Game extends Observable {
 		game = generateGame(copy(solution));
 		setChanged();
 		notifyObservers(UpdateAction.NEW_GAME);
-		
-		/* 
+
+		/*
 		 * Debug
 		 */
 		System.out.println("SOLUTION:");
@@ -52,25 +53,38 @@ public class Game extends Observable {
 	 * All observers will be notified, update action: check.
 	 */
 	public void checkGame() {
-		selectedNumber = 0;
-		for (int y = 0; y < 9; y++) {
-			for (int x = 0; x < 9; x++)
-				check[y][x] = game[y][x] == solution[y][x];
-		}
-		setChanged();
-		notifyObservers(UpdateAction.CHECK);
+		// Check by row
+		this.iterator = new IteratorRow(this.getSelectedRow());
+		if (iterator.checkSolution(game, solution)){
+			setChanged();
+			notifyObservers(UpdateAction.SOLVED_ROW);
+		};
+		
+		// Check by column
+		this.iterator = new IteratorColumn(this.getSelectedColumn());
+		if (iterator.checkSolution(game, solution)){
+			setChanged();
+			notifyObservers(UpdateAction.SOLVED_COLUMN);
+		};
+
+		// Check by square
+		this.iterator = new IteratorSquare(this.getSelectedRow(), this.getSelectedColumn());
+		if (iterator.checkSolution(game, solution)){
+			setChanged();
+			notifyObservers(UpdateAction.SOLVED_SQUARE);
+		};
 	}
-	
+
 	public void undoGame() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveGame() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	/**
 	 * Sets selected number to user input.<br />
 	 * All observers will be notified, update action: selected number.
@@ -78,20 +92,20 @@ public class Game extends Observable {
 	 * @param selectedNumber
 	 *            Number selected by user.
 	 */
-	public void setSelectedFieldX(int selectedFieldX) {
-		this.selectedFieldX = selectedFieldX;
+	public void setSelectedColumn(int selectedColumn) {
+		this.selectedColumn = selectedColumn;
 	}
 
-	public int getSelectedFieldX() {
-		return this.selectedFieldX;
+	public int getSelectedColumn() {
+		return this.selectedColumn;
 	}
 
-	public void setSelectedFieldY(int selectedFieldY) {
-		this.selectedFieldY = selectedFieldY;
+	public void setSelectedRow(int selectedRow) {
+		this.selectedRow = selectedRow;
 	}
 
-	public int getSelectedFieldY() {
-		return this.selectedFieldY;
+	public int getSelectedRow() {
+		return this.selectedRow;
 	}
 
 	public int getSelectedNumber() {
@@ -125,10 +139,11 @@ public class Game extends Observable {
 	 *            The number to be set.
 	 */
 	public void setNumber(int number) {
-		game[selectedFieldY][selectedFieldX] = number;
+		game[selectedRow][selectedColumn] = number;
 		this.selectedNumber = number;
 		setChanged();
 		notifyObservers(UpdateAction.SELECTED_NUMBER);
+		this.checkGame();
 	}
 
 	/**

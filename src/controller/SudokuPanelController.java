@@ -71,8 +71,8 @@ public class SudokuPanelController implements MouseListener, Observer {
 				int x = field.getFieldX();
 				int y = field.getFieldY();
 
-				game.setSelectedFieldX(x);
-				game.setSelectedFieldY(y);
+				game.setSelectedColumn(x);
+				game.setSelectedRow(y);
 			}
 			if (field.isModifiable()) {
 				Numbers.getInstance().setVisible(true);
@@ -98,6 +98,7 @@ public class SudokuPanelController implements MouseListener, Observer {
 	 *            The UpdateAction.
 	 */
 	public void update(Observable o, Object arg) {
+		Game game = (Game)o;
 		switch ((UpdateAction) arg) {
 		case NEW_GAME:
 			sudokuPanel.initializeWithGame((Game) o);
@@ -111,6 +112,21 @@ public class SudokuPanelController implements MouseListener, Observer {
 			sudokuPanel.initializeWithGame((Game) o);
 			break;
 		case HINT:
+			break;
+		case SOLVED_ROW:
+			sudokuPanel.solvedRow(game.getSelectedRow());
+			break;
+		case SOLVED_COLUMN:
+			System.out.println("SOLVED COLUMN");
+			sudokuPanel.solvedColumn(game.getSelectedColumn());
+			break;
+		case SOLVED_SQUARE:
+			System.out.println("SOLVED SQUARE");
+			sudokuPanel.solvedSquare(game.getSelectedRow(), game.getSelectedColumn());
+			break;
+		case SOLVED_GAME:
+			break;
+		default:
 			break;
 		}
 	}

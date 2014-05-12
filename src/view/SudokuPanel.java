@@ -53,7 +53,7 @@ public class SudokuPanel {
 	}
 
 	public void setNumber(Game game) {
-		fields[game.getSelectedFieldY()][game.getSelectedFieldX()].setNumber(
+		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(
 				game.getSelectedNumber());
 	}
 
@@ -73,5 +73,26 @@ public class SudokuPanel {
 
 	public Panel getPanel() {
 		return panel;
+	}
+
+	public void solvedRow(int row) {
+		for (int x = 0; x < 9; x++) {
+			fields[row][x].setSolved();
+		}
+	}
+
+	public void solvedColumn(int column) {
+		for (int y = 0; y < 9; y++) {
+			fields[y][column].setSolved();
+		}
+	}
+
+	public void solvedSquare(int row, int column) {
+		int squareFirstRow = (row/3)*3;
+		int squareFirstColumn = (column/3)*3;
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++)
+				fields[squareFirstRow + y][squareFirstColumn + x].setSolved();
+		}
 	}
 }

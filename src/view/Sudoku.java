@@ -47,7 +47,6 @@ public class Sudoku {
 		Numbers.getInstance().getPanel().setVisible(false);
 		Numbers.getInstance().getPanel().addMouseListener(numbersController);
 
-		
 		/*
 		 * Create and set up the menu
 		 */
@@ -56,25 +55,21 @@ public class Sudoku {
 		Menu menu = Sudoku.getViewsFactory().createMenu();
 		menu.setText("Options");
 		menuBar.addMenu(menu);
-
 		// New Game
 		MenuItem newGameMenuItem = Sudoku.getViewsFactory().createMenuItem();
 		newGameMenuItem.addActionListener(menuController);
 		newGameMenuItem.setCommand(new CommandNewGame(game));
 		menu.addMenuItem(newGameMenuItem);
-		
 		// Save Game
 		MenuItem saveGameMenuItem = Sudoku.getViewsFactory().createMenuItem();
 		saveGameMenuItem.addActionListener(menuController);
 		saveGameMenuItem.setCommand(new CommandSaveGame(game));
 		menu.addMenuItem(saveGameMenuItem);
-
 		// Undo Game
 		MenuItem undoGamemenuItem = Sudoku.getViewsFactory().createMenuItem();
 		undoGamemenuItem.addActionListener(menuController);
 		undoGamemenuItem.setCommand(new CommandUndoGame(game));
 		menu.addMenuItem(undoGamemenuItem);
-
 		// Exit
 		MenuItem exitItem = Sudoku.getViewsFactory().createMenuItem();
 		exitItem.addActionListener(menuController);
