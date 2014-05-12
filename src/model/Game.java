@@ -15,7 +15,6 @@ import java.util.Observable;
 public class Game extends Observable {
 	private int[][] solution; // Generated solution.
 	private int[][] game; // Generated game with user input.
-	private boolean[][] check; // Holder for checking validity of game.
 	private int selectedColumn; // Selected number by user.
 	private int selectedRow; // Selected number by user.
 	private int selectedNumber; // Selected number by user.
@@ -26,7 +25,6 @@ public class Game extends Observable {
 	 */
 	public Game() {
 		newGame();
-		check = new boolean[9][9];
 	}
 
 	/**
@@ -49,8 +47,8 @@ public class Game extends Observable {
 	}
 
 	/**
-	 * Checks user input against the solution and puts it into a check matrix.<br />
-	 * All observers will be notified, update action: check.
+	 * Checks user input against the solution<br />
+	 * All observers will be notified
 	 */
 	public void checkGame() {
 		// Check by row
@@ -159,18 +157,6 @@ public class Game extends Observable {
 		return game[y][x];
 	}
 
-	/**
-	 * Returns whether user input is valid of given position.
-	 * 
-	 * @param x
-	 *            X position in game.
-	 * @param y
-	 *            Y position in game.
-	 * @return True if user input of given position is valid, false otherwise.
-	 */
-	public boolean isCheckValid(int x, int y) {
-		return check[y][x];
-	}
 
 	/**
 	 * Returns whether given number is candidate on x axis for given game.
