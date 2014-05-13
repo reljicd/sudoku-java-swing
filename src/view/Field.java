@@ -64,15 +64,45 @@ public class Field {
 		}
 	}
 
-	public void setSolved(){
-		setState(solvedState);
-		updateLabel();
+	public FieldStates getState() {
+		if (state == emptyState)
+			return FieldStates.EMPTY;
+		else if (state == computerGeneratedState)
+			return FieldStates.COMPUTER_GENERATED;
+		else if (state == candidateState)
+			return FieldStates.CANDIDATE;
+		else if (state == solvedState)
+			return FieldStates.SOLVED;
+		else
+			return FieldStates.EMPTY;
 	}
-	
-	public boolean isModifiable(){
+
+	public void setState(FieldStates state) {
+		switch (state) {
+		case EMPTY:
+			setState(emptyState);
+			updateLabel();
+			break;
+		case COMPUTER_GENERATED:
+			setState(computerGeneratedState);
+			updateLabel();
+			break;
+		case CANDIDATE:
+			setState(candidateState);
+			updateLabel();
+			break;
+		case SOLVED:
+			setState(solvedState);
+			updateLabel();
+			break;
+		}
+
+	}
+
+	public boolean isModifiable() {
 		return state.isModifiable();
 	}
-	
+
 	/**
 	 * Returns x position in game.
 	 * 
@@ -94,8 +124,8 @@ public class Field {
 	public Label getLabel() {
 		return label;
 	}
-	
-	private void updateLabel(){
+
+	private void updateLabel() {
 		label.setForeground(state.getTextColor());
 		label.setBackground(state.getBackgroundColor());
 	}

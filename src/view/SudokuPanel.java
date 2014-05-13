@@ -1,7 +1,7 @@
 package view;
 
-import viewFactory.Panel;
 import model.Game;
+import viewFactory.Panel;
 import controller.SudokuPanelController;
 
 /**
@@ -13,6 +13,7 @@ public class SudokuPanel {
 	private Panel panel;
 	private Field[][] fields; // Array of fields.
 	private Panel[][] panels; // Panels holding the fields.
+	private SudokuPanelHistory history = new SudokuPanelHistory();
 
 	/**
 	 * Constructs the panel, adds sub panels and adds fields to these sub
@@ -38,6 +39,10 @@ public class SudokuPanel {
 		}
 	}
 
+	public Panel getPanel() {
+		return panel;
+	}
+
 	/**
 	 * Sets the fields corresponding to given game.
 	 * 
@@ -50,11 +55,79 @@ public class SudokuPanel {
 				fields[y][x].initialize(game.getNumber(x, y));
 			}
 		}
+		addStateToHistory();
 	}
 
-	public void setNumber(Game game) {
-		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(
-				game.getSelectedNumber());
+	public void setCandidateNumber(Game game) {
+		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(game
+				.getSelectedNumber());
+		addStateToHistory();
+	}
+
+	public void solvedRow(Game game) {
+		// First update the last field label with the last number
+		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(game
+				.getSelectedNumber());
+		// then update field states
+		int row = game.getSelectedRow();
+		for (int x = 0; x < 9; x++) {
+			fields[row][x].setState(FieldStates.SOLVED);
+		}
+		addStateToHistory();
+	}
+
+	public void solvedColumn(Game game) {
+		// First update the last field label with the last number
+		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(game
+				.getSelectedNumber());
+		// then update field states
+		int column = game.getSelectedColumn();
+		for (int y = 0; y < 9; y++) {
+			fields[y][column].setState(FieldStates.SOLVED);
+		}
+		addStateToHistory();
+	}
+
+	public void solvedSquare(Game game) {
+		// First update the last field label with the last number
+		fields[game.getSelectedRow()][game.getSelectedColumn()].setNumber(game
+				.getSelectedNumber());
+		// then update field states
+		int squareFirstRow = (game.getSelectedRow() / 3) * 3;
+		int squareFirstColumn = (game.getSelectedColumn() / 3) * 3;
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++)
+				fields[squareFirstRow + y][squareFirstColumn + x]
+						.setState(FieldStates.SOLVED);
+		}
+		addStateToHistory();
+	}
+
+	public void addStateToHistory() {
+		FieldStates[][] state = new FieldStates[9][9];
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++)
+				state[y][x] = fields[y][x].getState();
+		}
+		history.addState(state);
+	}
+
+	public void undoState() {
+		/*
+		 *  Go back in history 2 times
+		 *  	1st time to pop the last state
+		 *  	2nd time to pop the first history state
+		 *  Then after the game is reverted, save it as a last state
+		 */
+		FieldStates[][] previousStates = history.getLastState();
+		previousStates = history.getLastState();
+		if (previousStates != null) {
+			for (int x = 0; x < 9; x++) {
+				for (int y = 0; y < 9; y++)
+					fields[y][x].setState(previousStates[y][x]);
+			}
+		}
+		addStateToHistory();
 	}
 
 	/**
@@ -68,31 +141,6 @@ public class SudokuPanel {
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++)
 				panels[y][x].addMouseListener(sudokuController);
-		}
-	}
-
-	public Panel getPanel() {
-		return panel;
-	}
-
-	public void solvedRow(int row) {
-		for (int x = 0; x < 9; x++) {
-			fields[row][x].setSolved();
-		}
-	}
-
-	public void solvedColumn(int column) {
-		for (int y = 0; y < 9; y++) {
-			fields[y][column].setSolved();
-		}
-	}
-
-	public void solvedSquare(int row, int column) {
-		int squareFirstRow = (row/3)*3;
-		int squareFirstColumn = (column/3)*3;
-		for (int x = 0; x < 3; x++) {
-			for (int y = 0; y < 3; y++)
-				fields[squareFirstRow + y][squareFirstColumn + x].setSolved();
 		}
 	}
 }

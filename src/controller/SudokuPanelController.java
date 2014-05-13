@@ -101,28 +101,26 @@ public class SudokuPanelController implements MouseListener, Observer {
 		Game game = (Game)o;
 		switch ((UpdateAction) arg) {
 		case NEW_GAME:
-			sudokuPanel.initializeWithGame((Game) o);
+			sudokuPanel.initializeWithGame(game);
 			break;
 		case CHECK:
 			break;
-		case SELECTED_NUMBER:
-			sudokuPanel.setNumber((Game) o);
+		case SELECTED_CANDIDATE_NUMBER:
+			sudokuPanel.setCandidateNumber(game);
 			break;
 		case UNDO_GAME:
-			sudokuPanel.initializeWithGame((Game) o);
+			sudokuPanel.undoState();
 			break;
 		case HINT:
 			break;
 		case SOLVED_ROW:
-			sudokuPanel.solvedRow(game.getSelectedRow());
+			sudokuPanel.solvedRow(game);
 			break;
 		case SOLVED_COLUMN:
-			System.out.println("SOLVED COLUMN");
-			sudokuPanel.solvedColumn(game.getSelectedColumn());
+			sudokuPanel.solvedColumn(game);
 			break;
 		case SOLVED_SQUARE:
-			System.out.println("SOLVED SQUARE");
-			sudokuPanel.solvedSquare(game.getSelectedRow(), game.getSelectedColumn());
+			sudokuPanel.solvedSquare(game);
 			break;
 		case SOLVED_GAME:
 			break;

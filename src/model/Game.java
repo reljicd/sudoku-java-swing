@@ -19,6 +19,7 @@ public class Game extends Observable {
 	private int selectedRow; // Selected number by user.
 	private int selectedNumber; // Selected number by user.
 	private Iterator iterator;
+	private GameHistory history;
 
 	/**
 	 * Constructor
@@ -34,53 +35,75 @@ public class Game extends Observable {
 	public void newGame() {
 		solution = generateSolution(new int[9][9], 0);
 		game = generateGame(copy(solution));
+		history = new GameHistory();
+		saveGame();
 		setChanged();
 		notifyObservers(UpdateAction.NEW_GAME);
 
 		/*
-		 * Debug
+		 * DEBUG
 		 */
 		System.out.println("SOLUTION:");
 		print(solution);
-		System.out.println("GAME:");
-		print(game);
+		//System.out.println("GAME:");
+		//print(game);
 	}
 
 	/**
 	 * Checks user input against the solution<br />
 	 * All observers will be notified
 	 */
-	public void checkGame() {
+	public boolean checkGame() {
 		// Check by row
 		this.iterator = new IteratorRow(this.getSelectedRow());
-		if (iterator.checkSolution(game, solution)){
+		if (iterator.checkSolution(game, solution)) {
 			setChanged();
 			notifyObservers(UpdateAction.SOLVED_ROW);
-		};
-		
+			return true;
+		}
+		;
+
 		// Check by column
 		this.iterator = new IteratorColumn(this.getSelectedColumn());
-		if (iterator.checkSolution(game, solution)){
+		if (iterator.checkSolution(game, solution)) {
 			setChanged();
 			notifyObservers(UpdateAction.SOLVED_COLUMN);
-		};
+			return true;
+		}
+		;
 
 		// Check by square
-		this.iterator = new IteratorSquare(this.getSelectedRow(), this.getSelectedColumn());
-		if (iterator.checkSolution(game, solution)){
+		this.iterator = new IteratorSquare(this.getSelectedRow(),
+				this.getSelectedColumn());
+		if (iterator.checkSolution(game, solution)) {
 			setChanged();
 			notifyObservers(UpdateAction.SOLVED_SQUARE);
-		};
+			return true;
+		}
+		;
+		
+		return false;
 	}
 
 	public void undoGame() {
-		// TODO Auto-generated method stub
-
+		/*
+		 *  Go back in history 2 times
+		 *  	1st time to pop the last state
+		 *  	2nd time to pop the first history state
+		 *  Then after the game is reverted, save it as a last state
+		 */
+		int[][] lastGame = history.getLastState();
+		lastGame = history.getLastState();
+		if (lastGame != null) {
+			game = lastGame;
+			saveGame();
+			setChanged();
+			notifyObservers(UpdateAction.UNDO_GAME);
+		}
 	}
 
 	public void saveGame() {
-		// TODO Auto-generated method stub
-
+		history.addState(copy(game));
 	}
 
 	/**
@@ -139,9 +162,9 @@ public class Game extends Observable {
 	public void setNumber(int number) {
 		game[selectedRow][selectedColumn] = number;
 		this.selectedNumber = number;
+		saveGame();
 		setChanged();
-		notifyObservers(UpdateAction.SELECTED_NUMBER);
-		this.checkGame();
+		if(this.checkGame()==false) notifyObservers(UpdateAction.SELECTED_CANDIDATE_NUMBER);
 	}
 
 	/**
@@ -156,7 +179,6 @@ public class Game extends Observable {
 	public int getNumber(int x, int y) {
 		return game[y][x];
 	}
-
 
 	/**
 	 * Returns whether given number is candidate on x axis for given game.
